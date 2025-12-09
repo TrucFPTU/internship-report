@@ -91,7 +91,7 @@ CI/CD triển khai theo chuỗi GitLab → CodePipeline → CodeBuild.
 
 ---
 
-![Kiến Trúc](/images/2-Proposal/anh1.jpg)
+![Kiến Trúc](images/2-Proposal/anh1.jpg)
 
 ### 4. Triển khai kỹ thuật (Technical Implementation)
 

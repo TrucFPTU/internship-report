@@ -7,10 +7,6 @@ chapter: false
 
 # Internship Report
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
 ### Student Information:
 
 &emsp; **Full Name:** Doan Trung Truc
@@ -31,7 +27,7 @@ chapter: false
 
 &emsp; **Internship Duration:** From 08/09/2025 to 08/12/2025
 
-![Your profile picture](/images/avatar.png)
+![Avatar](images/anhAvartar.jpg)
 
 ### Report Content
 
