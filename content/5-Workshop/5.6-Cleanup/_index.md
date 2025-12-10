@@ -1,37 +1,47 @@
 ---
-title: "Clean up"
+title: "Monitoring and Clean up"
 date: "2025-12-09"
 weight: 6
 chapter: false
 pre: " <b> 5.6. </b> "
 ---
 
-Congratulations on completing this workshop!
-In this workshop, you learned architecture patterns for accessing Amazon S3 without using the Public Internet.
+## Monitoring deployment logs and application logs
 
-- By creating a gateway endpoint, you enabled direct communication between EC2 resources and Amazon S3, without traversing an Internet Gateway.
-- By creating an interface endpoint you extended S3 connectivity to resources running in your on-premises data center via AWS Site-to-Site VPN or Direct Connect.
+Elastic Beanstalk provides two methods for viewing logs:
 
-#### clean up
+### 1. Request Logs in Elastic Beanstalk
 
-1. Navigate to Hosted Zones on the left side of Route 53 console. Click the name of _s3.us-east-1.amazonaws.com_ zone. Click Delete and confirm deletion by typing delete.
+Accessible via **Logs → Request logs → Last 100 lines**.  
+This log shows:
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+- The Spring Boot startup process
+- Error logs if the application fails
+- Requests/responses processed by the runtime environment
 
-2. Disassociate the Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it.
+### 2, CloudWatch Logs
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+Elastic Beanstalk automatically pushes certain logs to CloudWatch,  
+especially system logs from the EC2 instance.
 
-4. Open the CloudFormation console and delete the two CloudFormation Stacks that you created for this lab:
+## Clean up resources after deployment
 
-- PLOnpremSetup
-- PLCloudSetup
+To avoid unexpected costs, it is recommended to delete the resources created after completing the workshop.
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+### 1. Delete the Environment
 
-5. Delete S3 buckets
+Go to Elastic Beanstalk → select the environment → Actions → **Terminate environment**.  
+This will remove the EC2 instance, the auto-generated security groups, and related resources.
 
-- Open S3 console
-- Choose the bucket we created for the lab, click and confirm empty. Click delete and confirm delete.
+### 2. Delete the Application (if no longer needed)
 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+Elastic Beanstalk → Application → Actions → **Delete Application**.
+
+### 3. Delete files in S3
+
+Elastic Beanstalk stores `.jar` versions inside an S3 bucket.  
+Go to S3 → locate the bucket created by EB → delete the unnecessary versions.
+
+### 4. Review CloudWatch Logs
+
+You may delete the log groups if you want to clean up further.

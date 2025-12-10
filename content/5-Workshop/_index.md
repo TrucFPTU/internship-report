@@ -6,28 +6,26 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
-# Secure Hybrid Access to S3 using VPC Endpoints
+# Deploying a Spring Boot REST API application to AWS Elastic Beanstalk
 
 #### Overview
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
+This workshop demonstrates the process of deploying a **Spring Boot REST API** application to **Elastic Beanstalk** in **Single Instance** mode.  
+This deployment model **does not use a Load Balancer**, **does not configure Auto Scaling**, and runs entirely within the **default VPC** of the AWS account.
 
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
+### The goals of this workshop include:
 
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-
-- **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-- **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+- Building the `.jar` file of the Spring Boot project.
+- Creating a simple Elastic Beanstalk Application and Environment.
+- Uploading and deploying the `.jar` file to the environment.
+- Testing the API using Postman.
+- Observing and analyzing logs through _request logs_.
 
 #### Content
 
 1. [Workshop overview](5.1-Workshop-overview)
 2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
-6. [Clean up](5.6-Cleanup/)
+3. [Create environment](5.3-S3-vpc/)
+4. [Upload and Deploy](5.4-S3-onprem/)
+5. [Access the application and test](5.5-Policy/)
+6. [Monitoring and Clean up](5.6-Cleanup/)

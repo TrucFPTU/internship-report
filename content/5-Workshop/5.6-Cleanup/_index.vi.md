@@ -1,38 +1,48 @@
 ---
-title: "Dọn dẹp tài nguyên"
+title: "Quan sát và Dọn dẹp tài nguyên"
 date: "2025-12-09"
 weight: 6
 chapter: false
 pre: " <b> 5.6. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+## Quan sát log triển khai và log ứng dụng
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+Elastic Beanstalk cung cấp hai hình thức xem log:
 
-- Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-  Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+### 1. Request Logs trong Elastic Beanstalk
 
-#### Dọn dẹp
+Có thể truy cập tại **Logs → Request logs → Last 100 lines**.  
+Log này hiển thị:
 
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+- Quá trình khởi chạy Spring Boot
+- Nhật ký lỗi nếu ứng dụng gặp lỗi
+- Request/response được xử lý qua môi trường runtime
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+### 2. CloudWatch Logs
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it.
+Elastic Beanstalk tự động đẩy một số log vào CloudWatch,  
+đặc biệt là log hệ thống của EC2 instance.
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+## Clean up tài nguyên sau khi triển khai
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
+Để tránh phát sinh chi phí không mong muốn, cần tiến hành xoá các tài nguyên đã tạo sau khi hoàn tất workshop.
 
-- PLOnpremSetup
-- PLCloudSetup
+### 1. Xoá Environment
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+Truy cập Elastic Beanstalk → chọn environment → Actions → **Terminate environment**.  
+Việc này sẽ xoá EC2 instance, security group tự tạo và các tài nguyên liên quan.
 
-5. Xóa các S3 bucket
+### 2. Xoá Application (nếu không còn sử dụng)
 
-- Mở bảng điều khiển S3
-- Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-- ![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+Elastic Beanstalk → Application → Actions → **Delete Application**.
+
+### 3. Xoá file trong S3
+
+Elastic Beanstalk lưu các version `.jar` trong bucket S3.  
+Vào S3 → tìm bucket do EB tạo → xoá các version không cần thiết.
+
+### 4. Kiểm tra lại CloudWatch Logs
+
+Có thể xoá log group để dọn dẹp nếu muốn.
+
